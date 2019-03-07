@@ -36,7 +36,7 @@ namespace Library.Controllers
       Dictionary<string, object> model = new Dictionary<string, object>();
       Author selectedAuthor = Author.Find(id);
       List<Book> authorBooks = selectedAuthor.GetBooks();
-      List<Book> allBooks = Book.GetAll();
+      List<Book> allBooks = new List<Book>(Book.GetAll().Keys);
       model.Add("author", selectedAuthor);
       model.Add("authorBooks", authorBooks);
       model.Add("allBooks", allBooks);

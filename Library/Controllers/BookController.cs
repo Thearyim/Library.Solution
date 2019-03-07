@@ -5,43 +5,47 @@ using System;
 
 namespace Library.Controllers
 {
-  public class BooksController : Controller
-  {
-
-    [HttpGet("/books")]
-    public ActionResult Index()
+    public class BooksController : Controller
     {
-        List<Book> allBooks = Book.GetAll();
-        return View(allBooks);
-    }
 
-    [HttpGet("/books/new")]
-    public ActionResult New()
-    {
-        return View();
-    }
+        [HttpGet("/books")]
+        public ActionResult Index()
+        {
+            Dictionary<Book, int> allBooks = Book.GetAll();
+            return View(allBooks);
+        }
 
-    [HttpPost("/books")]
-    public ActionResult Create(string title)
-    {
-      Book newBook = new Book(title, DateTime.Now.AddDays(30), false);
-      newBook.Save();
-      List<Book> allBooks = Book.GetAll();
-      return View("Index", allBooks);
-    }
+        [HttpGet("/books/new")]
+        public ActionResult New()
+        {
+            return View();
+        }
 
-    // [HttpGet("/items/{id}")]
-    // public ActionResult Show(int id)
-    // {
-    //   Dictionary<string, object> model = new Dictionary<string, object>();
-    //   return View(model);
-    // }
+        [HttpPost("/books")]
+        public ActionResult Create(string title)
+        {
+            Book newBook = new Book(title);
+            newBook.Save();
 
-    [HttpPost("/books/delete")]
-    public ActionResult DeleteAll()
-    {
-      Book.ClearAll();
-      return View();
+            // The GetAll() method returns a Dictionary<Book, int>
+            // where the Key is a 'Book' and the Value is the number of copies 
+            // of that book the library has.
+            List<Book> allBooks = new List<Book>(Book.GetAll().Keys);
+            return View("Index", allBooks);
+        }
+
+        // [HttpGet("/items/{id}")]
+        // public ActionResult Show(int id)
+        // {
+        //   Dictionary<string, object> model = new Dictionary<string, object>();
+        //   return View(model);
+        // }
+
+        [HttpPost("/books/delete")]
+        public ActionResult DeleteAll()
+        {
+            Book.ClearAll();
+            return View();
+        }
     }
-  }
 }

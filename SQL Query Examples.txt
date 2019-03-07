@@ -1,0 +1,5 @@
+SELECT author.*, books.*, count(*)
+FROM author 
+Join copies on author.id = copies.author_id
+Join books on books.id = copies.book_id
+Group BY author.id, books.id

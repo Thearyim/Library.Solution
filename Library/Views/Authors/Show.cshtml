@@ -13,11 +13,11 @@
 
       @if (@book.GetCheckedOut())
       {
-        <li style="color:red;">@item.GetTitle() (due:@book.GetDueDate())</li>
+        <li style="color:red;">@book.GetTitle() (due:@book.GetDueDate())</li>
       }
     else
       {
-        <li style="color:green;">@item.GetTitle() (due:@book.GetDueDate())</li>
+        <li style="color:green;">@book.GetTitle()</li>
       }
     }
   </ul>
